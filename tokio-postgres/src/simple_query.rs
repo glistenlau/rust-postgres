@@ -88,9 +88,9 @@ impl Stream for SimpleQueryStream {
                         .fields()
                         .map(|f| Ok(f.name().to_string()))
                         .collect::<Vec<_>>()
-                        .map_err(Error::parse)?
-                        .into();
-                    *this.columns = Some(columns);
+                        .map_err(Error::parse)?;
+                    *this.columns = Some(columns.clone().into());
+                    return Poll::Ready(Some(Ok(SimpleQueryMessage::Columns(columns))));
                 }
                 Message::DataRow(body) => {
                     let row = match &this.columns {

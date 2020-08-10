@@ -242,6 +242,7 @@ pub enum SimpleQueryMessage {
     ///
     /// The number of rows modified or selected is returned.
     CommandComplete(u64),
+    Columns(Vec<String>),
 }
 
 fn slice_iter<'a>(
